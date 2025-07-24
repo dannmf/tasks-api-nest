@@ -50,10 +50,13 @@ export class AuthService {
 
   async validateUser(email: string, password: string): Promise<User | null> {
     const user = await this.userRepository.findOne({ where: { email } });
-    if (user && user.password === password) {
-      return user;
-    }
-    return null;
+    if (!user) return null;
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (!isPasswordValid) return null;
+
+    return user;
   }
 
   async login(loginDto: LoginDto) {
