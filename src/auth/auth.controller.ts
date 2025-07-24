@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   UseGuards,
   ValidationPipe,
@@ -25,6 +27,16 @@ export class AuthController {
   @Post('login')
   async login(@Body(ValidationPipe) loginDto: LoginDto) {
     return this.authService.login(loginDto);
+  }
+
+  @Get('users')
+  async getAllUsers() {
+    return this.authService.findAll();
+  }
+
+  @Delete('users/:id')
+  async deleteUser(@Param('id') id: number) {
+    return this.authService.delete(id);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -3,11 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User } from './auth/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
-import { TasksModule } from './tasks/tasks.module';
 import { TaskModule } from './task/task.module';
 
 @Module({
   imports: [
+    AuthModule,
+    TaskModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
@@ -23,9 +24,6 @@ import { TaskModule } from './task/task.module';
         entities: [User],
       }),
     }),
-    AuthModule,
-    TasksModule,
-    TaskModule,
   ],
   controllers: [],
   providers: [],

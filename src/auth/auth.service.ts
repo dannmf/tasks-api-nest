@@ -84,4 +84,12 @@ export class AuthService {
   async findById(id: number): Promise<User | null> {
     return this.userRepository.findOne({ where: { id } });
   }
+
+  async findAll() {
+    return this.userRepository.find();
+  }
+
+  async delete(id: number) {
+    return this.userRepository.delete(id);
+  }
 }
